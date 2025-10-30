@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betrayal List Generator</title>
+    <style>
+        body,
+        html {
+            width: 100vw;
+            height: 100vh;
+            overflow-x: hidden;
+            background-color: green;
+        }
+
+        * {
+            margin: 0px;
+            padding: 0px
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        #container_up {
+            background-color: green;
+        }
+
+        #container_down {
+            display: flex;
+            width: 100vw;
+            aspect-ratio: 9/16;
+        }
+
+        #traitor {
+            width: 30vw;
+            object-fit: cover;
+            outline: none;
+            border: none;
+        }
+
+        #betrayals {
+            background-color: black;
+            width: 70vw;
+        }
+
+        input {
+            opacity: 100;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container_up">
+        <textarea id="field"></textarea>
+        <input id="input" type="file">
+    </div>
+    <div id="container_down">
+        <img id="traitor">
+        <div id="betrayals"></div>
+    </div>
+    <script>
+        const input = document.getElementById("input");
+        input.addEventListener("input", input_capa);
+        function input_capa() {
+            traitor = document.getElementById("traitor");
+
+            const image = input.files[0];
+
+            if (image && image.name.endsWith(".png") || image.name.endsWith(".jpg") || image.name.endsWith(".webp")) {
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    const base64StringWithPrefix = e.target.result;
+                    traitor.src = base64StringWithPrefix;
+                };
+
+                reader.readAsDataURL(image);
+            }
+        }
+    </script>
+</body>
+
+</html>
