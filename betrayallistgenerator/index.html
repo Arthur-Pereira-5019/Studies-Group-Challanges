@@ -45,6 +45,10 @@
         #betrayals {
             background-color: black;
             width: 70vw;
+            color: yellow;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 30px;
+            font-weight: bold;
         }
 
         input {
@@ -63,17 +67,22 @@
     </div>
     <div id="container_down">
         <img id="traitor">
-        <div id="betrayals"></div>
+        <span id="betrayals">-</span>
+        
     </div>
-    <script>
+    <canvas></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script type="module">
         const input = document.getElementById("input");
+        const field = document.getElementById("field");
+        const betrayals = document.getElementById("betrayals");
         input.addEventListener("input", input_capa);
         function input_capa() {
-            traitor = document.getElementById("traitor");
-
+            const traitor = document.getElementById("traitor");
+            
             const image = input.files[0];
 
-            if (image && image.name.endsWith(".png") || image.name.endsWith(".jpg") || image.name.endsWith(".webp")) {
+            if (image && image.name.endsWith(".png") || image.name.endsWith(".jpg") || image.name.endsWith(".webp") || image.name.endsWith(".jpeg")) {
                 const reader = new FileReader();
 
                 reader.onload = (e) => {
@@ -84,6 +93,13 @@
                 reader.readAsDataURL(image);
             }
         }
+        field.addEventListener("keydown", function () {
+            setTimeout(function () {
+                betrayals.innerHTML = "-" + field.value.replaceAll("\n", "<br>-");
+            }, 1)
+        })
+
+        
     </script>
 </body>
 
