@@ -27,6 +27,8 @@
 
         #container_up {
             background-color: green;
+            display: flex;
+            flex-direction: row;
         }
 
         #container_down {
@@ -64,22 +66,25 @@
     <div id="container_up">
         <textarea id="field"></textarea>
         <input id="input" type="file">
+        <button id="generate">Generate</button>
     </div>
     <div id="container_down">
         <img id="traitor">
         <span id="betrayals">-</span>
-        
     </div>
-    <canvas></canvas>
+    <a id="downloadlink"></a>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script type="module">
         const input = document.getElementById("input");
         const field = document.getElementById("field");
+        const button = document.getElementById("generate")
         const betrayals = document.getElementById("betrayals");
+        const traitor = document.getElementById("traitor");
+        const d = document.getElementById("downloadlink");
+
         input.addEventListener("input", input_capa);
         function input_capa() {
-            const traitor = document.getElementById("traitor");
-            
+
             const image = input.files[0];
 
             if (image && image.name.endsWith(".png") || image.name.endsWith(".jpg") || image.name.endsWith(".webp") || image.name.endsWith(".jpeg")) {
@@ -99,7 +104,26 @@
             }, 1)
         })
 
-        
+        button.addEventListener("click", function () {
+            const down = document.querySelector("#container_down")
+            if (traitor.src != "") {
+                html2canvas(down, {
+                    windowWidth: down.scrollWidth,
+                    windowHeight: down.scrollHeight
+                }).then(canvas => {
+                    d.href = canvas.toDataURL('image/png');
+                    d.download = "traicao"
+                    d.click();
+                });
+
+            } else {
+                alert("Load an image first!")
+            }
+
+        })
+
+
+
     </script>
 </body>
 
